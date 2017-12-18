@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Show the User Id</title>
+</head>
+<body>
+
+		<h3><a href = "{% url 'trip_app:index' %}"> Home </a></h3>
+        <h3><a href = "{% url 'trip_app:clear' %}"> Log out </a></h3>
+
+      
+    	
+
+		<h1>{{ selected_trip.destination }}</h1>
+
+		{% for person in trip_maker %}
+		{% for traveler in travelers %}
+		<!--{{traveler}}
+
+		{{ traveler.id}}== {{ person.user__id}}-->
+    	
+
+		{% if person.trip_maker == True %}
+		{% if traveler.id == person.user_id %}
+		
+
+		<p>Planned by: {{person.user.name}} </p>
+
+	
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+		{% endfor %}
+
+
+
+	
+		<p>Description: {{selected_trip.plan}} </p>
+		<p>Start Date: {{selected_trip.start_date}} </p>
+		<p>End Date: {{selected_trip.end_date}}  </p>
+
+      	
+
+		
+		
+
+		<h2>Others users joining the trip</h2>
+
+		{% for person in trip_maker %}
+		
+    	
+		{% if person.trip_maker == False %}
+		
+	
+
+			<ul>
+				<li>
+					<p>{{person.user.name}}</p>
+				</li>
+
+			</ul>
+
+		{% endif %}
+		
+		{% endfor %}
+
+
+
+		
+
+      
+</body>
+</html>

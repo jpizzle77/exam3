@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+		<h1>Welcome {{ request.session.user.name }}</h1>
+		<h3><a href = "{% url 'trip_app:add_trip' %}"> Add travel Plan </a></h3>
+		<h3><a href = "{% url 'trip_app:clear' %}"> Log out </a></h3>
+
+
+	
+		
+	   <h2>Your trip Info</h2>
+       <div id='trip_info'>
+            <table>
+                <tr>
+                  <th>Destination</th>
+                  <th>Travel Start Date</th>
+                  <th>Travel End Date</th>
+                  <th>Plan</th>
+                 
+                 </tr>
+			</table>
+
+
+
+			
+			{% for trip in current_user_trips %}
+			
+			          <table> 	
+
+
+
+			
+	              	<tr>
+	                  <td> <a href= "{% url 'trip_app:show_trip' trip.id %}"> {{ trip.destination }} </a></td>
+	                  <td>{{ trip.start_date }} </td>
+	                  <td> {{ trip.end_date }}</td>
+	                  <td>{{ trip.plan }} </td>
+	                </tr>  
+
+	            
+	                </table>
+	                
+	            
+	          
+	          {% endfor %}
+          </div>
+
+
+          {% if messages %}
+          {% for message in messages %}
+           <h2><font color="red">{{ message }}</font> </h2>
+          {% endfor %}
+        {% endif %}
+
+
+        <h1>Other's trip Info</h1>
+        <div id='trip_info'>
+
+        	
+            <table>
+
+          
+                <tr>
+                  <th>Name  </th>
+                  <th>Destination</th>
+                  <th>Travel Start Date</th>
+                  <th>Travel End Date</th>
+                  <th>Do you want to Join?</th>
+                  
+                  
+                </tr>
+               
+               
+
+       
+     
+			</table>
+			
+
+			{% for traveler in travelers %}
+			{% for trip in other_trips %}
+
+			
+
+			
+			{% if traveler.id == trip.users %}
+			{% if traveler.trips == trip.id %}
+			
+              
+
+	
+            <table>
+
+                <tr>
+                  <td> {{traveler.name}}</td>
+                  <td> <a href= "{% url 'trip_app:show_trip' trip.id %}"> {{ trip.destination }} </a></td>
+                  <td> {{trip.start_date}} </td>
+                  <td> {{trip.end_date}} </td>
+                  <!--#<td> <a href= "{% url 'trip_app:join_trip' trip.id %}"> Join </a></td>-->
+
+              
+
+               
+             
+               
+
+                  <td><form action="{% url 'trip_app:join_trip' trip.id %}""  method='POST'>
+                  	{% csrf_token %}
+ 					 <input type="hidden" name="trip_id" value = "{{ trip.id }}">
+ 					 <input type="hidden" name="joined_trip" value = "False">
+ 					 <input type="submit" name="" value= "Join">
+  
+				  </form></td>
+				 
+                </tr>
+               
+               
+             
+
+               
+               
+
+       
+     
+			</table>
+			{% endif %}
+			{% endif %}
+			{% endfor %}
+			{% endfor %}
+          </div>
+        
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>show page for logging in or registering</title>
+</head>
+<body>
+
+
+        {% if messages %}
+          {% for message in messages %}
+           <h2><font color="red">{{ message }}</font> </h2>
+          {% endfor %}
+        {% endif %}
+
+        <h3><a href = "{% url 'trip_app:index' %}"> Home </a></h3>
+        <h3><a href = "{% url 'trip_app:clear' %}"> Log out </a></h3>
+        <h1>Add a trip!</h1>
+      
+        <form name ="name" action="{% url 'trip_app:create_trip' %}" method='POST'>
+         {% csrf_token %}
+
+          <input type="hidden" name="trip_maker" value = "True">
+          <input type="hidden" name="user_id" value = "{{request.session.user.id}}">
+
+         <p><label for="destination">Destination </label>
+         <p><input  type='text' name='destination' value= 'abc'></p>
+        
+          <p><label for="plan">Description</label>
+          <p><input  type='text' name='plan' value= 'abc'></p>
+
+          <p><label for="start_date">Travel Date From:</label></p>
+          <p><input  type='date' name='start_date' value= '' ></p>
+
+          <p><label for="end_date">Travel Date To:</label></p>
+          <p><input  type='date' name='end_date' value= '' ></p>
+
+
+          
+
+      
+          
+          <p><input type="submit" value="Add trip!"></p>
+
+
+
+         </form>
+      
+         
+         <p></p>
+
+
+</body>
+</html>
